@@ -1,0 +1,41 @@
+[package]
+name = "evm-accounts"
+authors = ['Metaverse <https://github.com/mvs-org>']
+edition = '2018'
+license = 'GPL-3.0'
+homepage = 'https://mvs.org'
+repository = 'https://github.com/mvs-org/hyperspace'
+version = '1.13.0'
+
+[dependencies]
+codec = { package = "parity-scale-codec", version = "2.0.0", default-features = false }
+frame-support = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" , default-features = false }
+frame-system = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" , default-features = false }
+libsecp256k1 = { version = "0.3.4", default-features = false, features = ["hmac"] }
+sp-core = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" , default-features = false }
+sp-runtime = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" , default-features = false }
+sp-io = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" , default-features = false }
+sp-std = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" , default-features = false }
+fp-evm = { default-features = false, git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper" }
+pallet-evm = { default-features = false, git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper" }
+orml-utilities = { git = 'https://github.com/open-web3-stack/open-runtime-module-library.git', rev = 'fb405b1', default-features = false }
+impl-trait-for-tuples = "0.1.3"
+hyperspace-traits = { path = "../../modules/traits", default-features = false }
+
+[dev-dependencies]
+pallet-balances = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"libsecp256k1/std",
+	"sp-core/std",
+	"sp-runtime/std",
+	"sp-io/std",
+	"sp-std/std",
+	"frame-support/std",
+	"frame-system/std",
+	"fp-evm/std",
+	"pallet-evm/std",
+]
