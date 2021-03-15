@@ -1,0 +1,25 @@
+[package]
+name = "hyperspace-rpc-runtime-api"
+authors = ['Metaverse <https://github.com/mvs-org>']
+edition = "2018"
+license = 'GPL-3.0'
+homepage = 'https://mvs.org'
+repository = 'https://github.com/mvs-org/hyperspace'
+version = '1.13.0'
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+primitives = { default-features = false, package = 'hyperspace-primitives', path = '../../primitives', version = '1.13.0'}
+sp-api = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" , default-features = false }
+sp-std = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" , default-features = false }
+codec = { package = "parity-scale-codec", version = "2.0.0", default-features = false }
+
+
+[features]
+default = ["std"]
+std = [
+	"sp-api/std",
+	"codec/std",
+]

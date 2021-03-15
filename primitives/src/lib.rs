@@ -1,61 +1,90 @@
-//! Betelgeuse primitive constants and types.
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use sp_api::decl_runtime_apis;
+#[macro_use]
+extern crate num_derive;
+use codec::{Decode, Encode};
 
-pub type Difficulty = sp_core::U256;
+#[cfg(feature = "std")]
+use serde::{Deserialize, Serialize};
 
-/// Block interval, in seconds, the network will tune its next_target for.
-pub const BLOCK_TIME_SEC: u64 = 60;
-/// Block time interval in milliseconds.
-pub const BLOCK_TIME: u64 = BLOCK_TIME_SEC * 1000;
+use sp_runtime::{
+  FixedU128,
+  generic,
+  traits::{BlakeTwo256, IdentifyAccount, Verify},
+  MultiSignature, RuntimeDebug
+};
 
-/// Nominal height for standard time intervals, hour is 60 blocks
-pub const HOUR_HEIGHT: u64 = 3600 / BLOCK_TIME_SEC;
-/// A day is 1440 blocks
-pub const DAY_HEIGHT: u64 = 24 * HOUR_HEIGHT;
-/// A week is 10_080 blocks
-pub const WEEK_HEIGHT: u64 = 7 * DAY_HEIGHT;
-/// A year is 524_160 blocks
-pub const YEAR_HEIGHT: u64 = 52 * WEEK_HEIGHT;
+/// An index to a block.
+pub type BlockNumber = u32;
 
-/// Number of blocks used to calculate difficulty adjustments
-pub const DIFFICULTY_ADJUST_WINDOW: u64 = HOUR_HEIGHT;
-/// Clamp factor to use for difficulty adjustment
-/// Limit value to within this factor of goal
-pub const CLAMP_FACTOR: u128 = 2;
-/// Dampening factor to use for difficulty adjustment
-pub const DIFFICULTY_DAMP_FACTOR: u128 = 3;
-/// Minimum difficulty, enforced in diff retargetting
-/// avoids getting stuck when trying to increase difficulty subject to dampening
-pub const MIN_DIFFICULTY: u128 = DIFFICULTY_DAMP_FACTOR;
-/// Maximum difficulty.
-pub const MAX_DIFFICULTY: u128 = u128::max_value();
+/// Alias to 512-bit hash when used in the context of a transaction signature on
+/// the chain.
+pub type Signature = MultiSignature;
 
-/// Value of 1 KLP.
-pub const DOLLARS: u128 = 1_000_000_000_000;
-/// Value of cents relative to KLP.
-pub const CENTS: u128 = DOLLARS / 100;
-/// Value of millicents relative to KLP.
-pub const MILLICENTS: u128 = CENTS / 1_000;
-/// Value of microcents relative to RLP.
-pub const MICROCENTS: u128 = MILLICENTS / 1_000;
+/// Alias to the public key used for this chain, actually a `MultiSigner`. Like
+/// the signature, this also isn't a fixed size when encoded, as different
+/// cryptos have different size public keys.
+pub type AccountPublic = <Signature as Verify>::Signer;
 
-pub const fn deposit(items: u32, bytes: u32) -> u128 {
-	items as u128 * 2 * DOLLARS + (bytes as u128) * 10 * MILLICENTS
+/// Alias to the opaque account ID type for this chain, actually a
+/// `AccountId32`. This is always 32 bytes.
+pub type AccountId = <AccountPublic as IdentifyAccount>::AccountId;
+
+/// The type for looking up accounts. We don't expect more than 4 billion of
+/// them.
+pub type AccountIndex = u32;
+
+/// Index of a transaction in the chain. 32-bit should be plenty.
+pub type Index = u32;
+
+/// A hash of some data used by the chain.
+pub type Hash = sp_core::H256;
+
+/// An instant or duration in time.
+pub type Moment = u64;
+
+/// Counter for the number of eras that have passed.
+pub type EraIndex = u32;
+
+/// Balance of an account.
+pub type Balance = u128;
+
+/// Signed version of Balance
+pub type Amount = i128;
+
+/// Header type.
+pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
+
+/// Block type.
+pub type Block = generic::Block<Header, UncheckedExtrinsic>;
+
+/// Block ID.
+pub type BlockId = generic::BlockId<Block>;
+
+/// Opaque, encoded, unchecked extrinsic.
+pub use sp_runtime::OpaqueExtrinsic as UncheckedExtrinsic;
+
+#[repr(u32)]
+#[derive(Encode, Decode, Eq, FromPrimitive, PartialEq, Copy, Clone, RuntimeDebug, PartialOrd, Ord, enum_iterator::IntoEnumIterator)]
+#[cfg_attr(feature = "std", derive(Serialize, Deserialize, strum_macros::EnumIter, strum_macros::Display, int_enum::IntEnum))]
+pub enum CurrencyId {
+	  ETP = 0,
+	  CUSDT = 1,
+	  DOT = 2,
+	  CETH = 3,
 }
 
-/// Block number of one hour.
-pub const HOURS: u32 = 60;
-/// Block number of one day.
-pub const DAYS: u32 = 24 * HOURS;
+/// dex related types
+pub type Rate = FixedU128;
+pub type Ratio = FixedU128;
+pub type Price = FixedU128;
+/// Share type
+pub type Share = u128;
 
-pub const ALGORITHM_IDENTIFIER_V1: [u8; 8] = *b"randomx1";
-pub const ALGORITHM_IDENTIFIER_V2: [u8; 8] = *b"randomx2";
-
-decl_runtime_apis! {
-	pub trait AlgorithmApi {
-		fn identifier() -> [u8; 8];
-	}
+pub mod currency {
+  use super::*;
+  pub const DOLLARS: Balance = 1_000_000_000_000_000_000;
+  pub const CENTS: Balance = DOLLARS / 100; // 10_000_000_000_000_000
+  pub const MILLICENTS: Balance = CENTS / 1000; // 10_000_000_000_000
+  pub const MICROCENTS: Balance = MILLICENTS / 1000; // 10_000_000_000
 }
