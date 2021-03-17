@@ -1,0 +1,79 @@
+[package]
+name = 'hyperspace'
+authors = ['Metaverse <https://github.com/mvs-org>']
+build = 'build.rs'
+description = 'Hyperspace node'
+edition = '2018'
+license = 'GPL-3.0'
+homepage = 'https://mvs.org'
+repository = 'https://github.com/mvs-org/hyperspace'
+version = '1.13.0'
+
+[package.metadata.docs.rs]
+targets = ['x86_64-unknown-linux-gnu']
+
+[[bin]]
+name = 'hyperspace'
+
+[dependencies]
+primitives = { package = 'hyperspace-primitives', path = '../primitives', version = '1.13.0'}
+hyperspace-runtime = {path = '../runtime', version = '1.13.0' }
+hyperspace-rpc = {default-features = false, version = '1.13.0', package = 'hyperspace-rpc', path = '../rpc' }
+futures = { version = "0.3.9", features = ["compat"] }
+
+jsonrpc-core = '15.0.0'
+jsonrpc-pubsub = "15.0.0"
+structopt = '0.3.8'
+serde_json = "1.0"
+
+pallet-contracts = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" , default-features = false }
+pallet-contracts-rpc = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+pallet-transaction-payment-rpc = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-authority-discovery = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sc-basic-authorship = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sc-cli = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-client-api = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-chain-spec = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-consensus = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-consensus-babe = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-consensus-babe-rpc = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-consensus-epochs = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-consensus-slots = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-finality-grandpa-rpc = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-finality-grandpa = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-executor = {features = ['wasmtime'], git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-keystore = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sc-network = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sc-rpc = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sc-rpc-api = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sc-sync-state-rpc = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sc-service = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sc-transaction-pool = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sp-api = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0" }
+sp-authority-discovery = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sp-block-builder = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sp-blockchain = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sp-consensus = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sp-consensus-babe = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sp-core = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sp-finality-grandpa = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sp-inherents = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sp-keystore = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sp-runtime = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+sp-transaction-pool = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+substrate-frame-rpc-system = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"   }
+hex-literal = { version = '0.3.1' }
+sc-telemetry = { git = "https://github.com/paritytech/substrate.git",  tag = "v3.0.0"  }
+pallet-evm = { git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper"  }
+pallet-ethereum = { git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper" }
+fc-rpc = { git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper", features = ["rpc_binary_search_estimate"] }
+fp-rpc = { git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper" }
+fc-consensus = { git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper" }
+fp-consensus = { git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper" }
+fc-db = { git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper" }
+fc-rpc-core = { git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper" }
+fc-mapping-sync = { git = "https://github.com/mvs-org-sub/frontier.git", branch = "v0.1.0-hyper" }
+primitive-types = { version = "0.9", default-features = false, features = ["rlp", "byteorder"] }
+
+[build-dependencies]
+substrate-build-script-utils = { git = "https://github.com/paritytech/substrate", tag = "v3.0.0" }
